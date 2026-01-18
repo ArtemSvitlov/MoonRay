@@ -1,0 +1,46 @@
+# --- Бинарники и объектные файлы ---
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# --- Папки сборки (Build) ---
+build/
+bin/
+obj/
+out/
+
+# --- Visual Studio ---
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.pdb
+*.idb
+
+# --- VS Code ---
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# --- CLion / JetBrains ---
+.idea/
+cmake-build-*/
+
+# --- CMake ---
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+Makefile
+
+# --- Зависимости (если скачиваешь их в папку) ---
+external/raylib/
+# Если Lua лежит отдельной либой, можно тоже добавить
+
+# --- Логи и временные файлы ---
+*.log
+*.tmp
