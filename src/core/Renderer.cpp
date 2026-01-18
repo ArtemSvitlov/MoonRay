@@ -20,14 +20,14 @@
 
 
 void Renderer::Initialize() {
-    // Initialization code for the renderer
+    // TODO: Initialization code for the renderer
 }
 
 void Renderer::RenderScene(Camera3D camera) {
-    // Code to render the scene using the provided camera
+    // TODO: Rendering code using the provided camera
 }
 
 void Renderer::Shutdown() {
-    // Cleanup code for the renderer
+    //TODO: Cleanup code for the renderer
 }
 
