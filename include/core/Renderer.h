@@ -27,7 +27,8 @@ class Renderer {
 public:
     void Initialize();
 
-    void RenderScene(Camera3D camera);
+
+    void RenderScene(Scene& scene, Camera3D camera);
     
     void Shutdown();
 };

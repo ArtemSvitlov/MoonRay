@@ -17,6 +17,9 @@
 
 
 #include "core/Renderer.h"
+#include "raylib.h"
+#include "core/Scene.h"
+#include "core/GameObject.h"
 
 
 void Renderer::Initialize() {
