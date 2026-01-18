@@ -20,7 +20,7 @@
 #include "raylib.h"
 #include <iostream>
 #include <vector>
-#include "includes/Renderer.h"
+#include "core/Renderer.h"
 
 
 const char* TITLE = "SIMPLE ENGINE BASE";

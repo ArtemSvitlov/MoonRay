@@ -16,7 +16,7 @@
  */
 
 
-#include "includes/Renderer.h"
+#include "core/Renderer.h"
 
 
 void Renderer::Initialize() {
