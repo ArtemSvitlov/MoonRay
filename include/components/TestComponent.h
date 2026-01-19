@@ -30,6 +30,6 @@ public:
 
     void Draw() override {
    
-        // TODO: Visualize collision sphere
+        // TODO: Draw something for testing
     }
 };
