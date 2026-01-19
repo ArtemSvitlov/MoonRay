@@ -40,3 +40,6 @@ The lifecycle is handled automatically by the **Scene**. When the scene updates,
 
 You attach these behaviors using `AddComponent<T>(args...)`, which perfectly forwards constructor arguments and stores the component in a `std::unique_ptr` for automatic memory management. If components need to talk to each other, use `GetComponent<T>()` to retrieve a specific instance from the owner. Because the **Scene** now uses `std::unique_ptr` for objects, everything is cleaned up automatically when the scene is destroyed, preventing memory leaks without requiring manual deletes.
 
+---
+
+**Next Step:** Would you like me to help you set up a **CameraFollow** component that uses these same principles to track your moving object?
