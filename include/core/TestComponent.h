@@ -16,37 +16,20 @@
  */
 
 
+#include "core/Component.h"
+#include "core/GameObject.h"
 
-#ifndef SCENE_H
-#define SCENE_H
-
-#include <vector>
-#include "GameObject.h"
-
-class Scene {
-private:
-  
-    std::vector<std::unique_ptr<GameObject>> gameObjects;
-
+class TestComponent : public Component {
 public:
-    Scene() = default;
+    float radius;
+    TestComponent(float r) : radius(r) {}
 
-
-    void AddGameObject(std::unique_ptr<GameObject> obj) {
-        if (obj) gameObjects.push_back(std::move(obj));
+    void Update(float deltaTime) override {
+        // TODO It test component 
     }
 
-    void Update(float deltaTime) {
-        for (auto& obj : gameObjects) {
-            obj->Update(deltaTime);
-        }
-    }
-
-    void Render() const {
-        for (const auto& obj : gameObjects) {
-            obj->Render();
-        }
+    void Draw() override {
+   
+        // TODO: Visualize collision sphere
     }
 };
-
-#endif

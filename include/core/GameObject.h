@@ -16,38 +16,74 @@
  */
 
 
-
-
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
 
+#include <vector>
+#include <memory>
+#include <algorithm>
 #include "raylib.h"
+#include "core/Component.h"
 
 
 class GameObject {
-    private:
-        Vector3 position;
-        Vector3 rotationAxis; 
-        float rotationAngle; 
-        Vector3 scale;
-        Model model;
-    public:
-        GameObject(const Vector3& pos, const Vector3& rotAxis, const Vector3& scl, const Model& mdl)
-            : position(pos), rotationAxis(rotAxis), rotationAngle(0.0f), scale(scl), model(mdl) {}
+private:
+    Vector3 position;
+    Vector3 rotationAxis;
+    float rotationAngle;
+    Vector3 scale;
+    Model model;
+    std::vector<std::unique_ptr<Component>> components;
+
+public:
+    GameObject(Vector3 pos, Vector3 rotAxis, Vector3 scl, Model mdl)
+        : position(pos), rotationAxis(rotAxis), rotationAngle(0.0f), scale(scl), model(mdl) {}
 
 
-        void SetRotationAngle(float angle) { rotationAngle = angle; }
+    GameObject(const GameObject&) = delete;
+    GameObject& operator=(const GameObject&) = delete;
+    GameObject(GameObject&&) = default;
 
-        float GetRotationAngle() const { return rotationAngle; }
-        
+    void SetRotationAngle(float angle) { rotationAngle = angle; }
 
-        void SetRotationAxis(Vector3 axis) { rotationAxis = axis; }
+    float GetRotationAngle() const { return rotationAngle; }
 
-        void Render() const {
-            DrawModelEx(model, position, rotationAxis, rotationAngle, scale, WHITE);
+
+    void SetRotationAxis(Vector3 axis) { rotationAxis = axis; }
+
+    template <typename T, typename... TArgs>
+    T& AddComponent(TArgs&&... args) {
+        auto comp = std::make_unique<T>(std::forward<TArgs>(args)...);
+        comp->SetOwner(this);
+        T& reference = *comp;
+        components.push_back(std::move(comp));
+        return reference;
+    }
+
+
+    template <typename T>
+    T* GetComponent() {
+        for (auto& comp : components) {
+            T* target = dynamic_cast<T*>(comp.get());
+            if (target) return target;
         }
-        
-        Model GetModel() const { return model; }
+        return nullptr;
+    }
+
+    void Update(float deltaTime) {
+        for (auto& comp : components) comp->Update(deltaTime);
+    }
+
+    void Render() const {
+
+        if (scale.x == 0 && scale.y == 0 && scale.z == 0) return;
+        DrawModelEx(model, position, rotationAxis, rotationAngle, scale, WHITE);
+        for (auto& comp : components) comp->Draw();
+    }
+
+    Vector3 GetPosition() const { return position; }
+
+    Model GetModel() const { return model; }
 };
 
 #endif // GAME_OBJECT_H

@@ -16,37 +16,20 @@
  */
 
 
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
-#ifndef SCENE_H
-#define SCENE_H
+class GameObject; 
 
-#include <vector>
-#include "GameObject.h"
-
-class Scene {
-private:
-  
-    std::vector<std::unique_ptr<GameObject>> gameObjects;
-
+class Component {
+protected:
+    GameObject* owner = nullptr;
 public:
-    Scene() = default;
-
-
-    void AddGameObject(std::unique_ptr<GameObject> obj) {
-        if (obj) gameObjects.push_back(std::move(obj));
-    }
-
-    void Update(float deltaTime) {
-        for (auto& obj : gameObjects) {
-            obj->Update(deltaTime);
-        }
-    }
-
-    void Render() const {
-        for (const auto& obj : gameObjects) {
-            obj->Render();
-        }
-    }
+    virtual ~Component() = default;
+    void SetOwner(GameObject* entity) { owner = entity; }
+    
+    virtual void Update(float deltaTime) {}
+    virtual void Draw() {}
 };
 
 #endif

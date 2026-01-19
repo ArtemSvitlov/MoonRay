@@ -18,43 +18,55 @@
 
 
 #include "raylib.h"
-#include <iostream>
-#include <vector>
+#include <memory>
 #include "core/Renderer.h"
+#include "core/Scene.h"
+#include "core/GameObject.h"
 
 
-const char* TITLE = "SIMPLE ENGINE BASE";
+const char* TITLE = "ENGINE BASE";
 const int WIDTH = 800;
 const int HEIGHT = 450;
 const int TARGET_FPS = 60;
-const Camera3D CAMERA_SETUP = { { 10, 10, 10 }, { 0, 0, 0 }, { 0, 1, 0 }, 45, 0 };
 
 
+const Camera3D CAMERA_SETUP = { { 10.0f, 10.0f, 10.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f, CAMERA_PERSPECTIVE };
 
 int main() {
+
     InitWindow(WIDTH, HEIGHT, TITLE);
+    SetTargetFPS(TARGET_FPS);
 
-    Renderer RENDERER;
+    Renderer renderer;
+    renderer.Initialize();
 
-    RENDERER.Initialize();
+    Scene scene;
+
+
 
     Camera camera = CAMERA_SETUP;
 
-
-    SetTargetFPS(TARGET_FPS);
-
     while (!WindowShouldClose()) {
+        float deltaTime = GetFrameTime();
+
+    
         UpdateCamera(&camera, CAMERA_ORBITAL);
+        scene.Update(deltaTime);
 
         BeginDrawing();
             ClearBackground(RAYWHITE);
+            
             BeginMode3D(camera);
-
-                RENDERER.RenderScene(camera);
-
+                renderer.RenderScene(scene, camera);
             EndMode3D();
+
+            DrawFPS(10, 10); 
         EndDrawing();
     }
-    RENDERER.Shutdown();
+
+
+    renderer.Shutdown();
     CloseWindow();
+
+    return 0;
 }

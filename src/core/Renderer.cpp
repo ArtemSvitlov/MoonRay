@@ -26,8 +26,8 @@ void Renderer::Initialize() {
     // TODO: Initialization code for the renderer
 }
 
-void Renderer::RenderScene(Camera3D camera) {
-    // TODO: Rendering code using the provided camera
+void Renderer::RenderScene(const Scene& scene, Camera3D& camera) {
+    scene.Render();
 }
 
 void Renderer::Shutdown() {
