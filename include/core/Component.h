@@ -29,7 +29,7 @@ public:
     void SetOwner(GameObject* entity) { owner = entity; }
     
     virtual void Update(float deltaTime) {}
-    virtual void Draw() {}
+    virtual void Draw() const {}
 };
 
 #endif

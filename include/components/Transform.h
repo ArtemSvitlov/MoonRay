@@ -16,20 +16,27 @@
  */
 
 
+#ifndef TRANSFORM_H
+#define TRANSFORM_H
+
 #include "core/Component.h"
-#include "core/GameObject.h"
+#include "raylib.h"
 
-class EmptyComponent : public Component {
+class Transform : public Component {
 public:
-    float radius;
-    EmptyComponent(float r) : radius(r) {}
+    Vector3 position;
+    Vector3 rotationAxis;
+    float rotationAngle;
+    Vector3 scale;
 
-    void Update(float deltaTime) override {
-    
-    }
+    Transform(Vector3 pos = {0,0,0}, Vector3 rotAxis = {0,1,0}, float angle = 0, Vector3 scl = {1,1,1})
+        : position(pos), rotationAxis(rotAxis), rotationAngle(angle), scale(scl) {}
 
-    void Draw() const override {
-
-
+    void Translate(Vector3 delta) {
+        position.x += delta.x;
+        position.y += delta.y;
+        position.z += delta.z;
     }
 };
+
+#endif

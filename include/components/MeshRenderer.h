@@ -16,20 +16,34 @@
  */
 
 
+#ifndef MESH_RENDERER_H
+#define MESH_RENDERER_H
+
 #include "core/Component.h"
 #include "core/GameObject.h"
+#include "components/Transform.h"
+#include "raylib.h"
 
-class EmptyComponent : public Component {
+class MeshRenderer : public Component {
+private:
+    Model model;
+
 public:
-    float radius;
-    EmptyComponent(float r) : radius(r) {}
-
-    void Update(float deltaTime) override {
-    
-    }
+    MeshRenderer(Model mdl) : model(mdl) {}
 
     void Draw() const override {
 
+        Transform* transform = owner->GetComponent<Transform>();
 
+        if (transform) {
+            DrawModelEx(model,
+                        transform->position,
+                        transform->rotationAxis,
+                        transform->rotationAngle,
+                        transform->scale,
+                        WHITE);
+        }
     }
 };
+
+#endif

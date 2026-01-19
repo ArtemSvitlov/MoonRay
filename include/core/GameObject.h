@@ -22,47 +22,15 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
-#include "raylib.h"
 #include "core/Component.h"
-
 
 class GameObject {
 private:
-    Vector3 position;
-    Vector3 rotationAxis;
-    float rotationAngle;
-    Vector3 scale;
-    Model model;
     std::vector<std::unique_ptr<Component>> components;
 
 public:
-    GameObject(Vector3 pos, Vector3 rotAxis, Vector3 scl, Model mdl)
-        : position(pos), rotationAxis(rotAxis), rotationAngle(0.0f), scale(scl), model(mdl) {}
-
-
-    GameObject(const GameObject&) = delete;
-    GameObject& operator=(const GameObject&) = delete;
-    GameObject(GameObject&&) = default;
-
-    void SetRotationAngle(float angle) { rotationAngle = angle; }
-
-    float GetRotationAngle() const { return rotationAngle; }
-
-    void SetPosition(Vector3 newPos) { position = newPos; }
-
-
-    void Translate(Vector3 delta) {
-        position.x += delta.x;
-        position.y += delta.y;
-        position.z += delta.z;
-    }
-    void SetRotationAxis(Vector3 axis) { rotationAxis = axis; }
-
-    Vector3 GetRotationAxis() const { return rotationAxis; }
-
-    void SetScale(Vector3 scl) { scale = scl; }
-    Vector3 GetScale() const { return scale; }
-
+    GameObject() = default;
+    
     template <typename T, typename... TArgs>
     T& AddComponent(TArgs&&... args) {
         auto comp = std::make_unique<T>(std::forward<TArgs>(args)...);
@@ -71,7 +39,6 @@ public:
         components.push_back(std::move(comp));
         return reference;
     }
-
 
     template <typename T>
     T* GetComponent() {
@@ -87,15 +54,8 @@ public:
     }
 
     void Render() const {
-
-        if (scale.x == 0 && scale.y == 0 && scale.z == 0) return;
-        DrawModelEx(model, position, rotationAxis, rotationAngle, scale, WHITE);
-        for (auto& comp : components) comp->Draw();
+        for (const auto& comp : components) comp->Draw();
     }
-
-    Vector3 GetPosition() const { return position; }
-
-    Model GetModel() const { return model; }
 };
 
-#endif // GAME_OBJECT_H
+#endif
