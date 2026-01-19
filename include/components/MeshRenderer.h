@@ -21,27 +21,36 @@
 
 #include "core/Component.h"
 #include "core/GameObject.h"
-#include "components/Transform.h"
+#include "components/TransformComponent.h"
 #include "raylib.h"
+#include "components/MaterialComponent.h"
 
 class MeshRenderer : public Component {
 private:
-    Model model;
+    mutable Model model;
 
 public:
     MeshRenderer(Model mdl) : model(mdl) {}
 
     void Draw() const override {
+        TransformComponent* transform = owner->GetComponent<TransformComponent>();
 
-        Transform* transform = owner->GetComponent<Transform>();
+        MaterialComponent* matComp = owner->GetComponent<MaterialComponent>();
 
         if (transform) {
-            DrawModelEx(model,
-                        transform->position,
-                        transform->rotationAxis,
-                        transform->rotationAngle,
-                        transform->scale,
-                        WHITE);
+            
+            if (matComp) {
+                model.materials[0] = matComp->material;
+                DrawModelEx(model,
+                            transform->position,
+                            transform->rotationAxis,
+                            transform->rotationAngle,
+                            transform->scale,
+                            WHITE); 
+            } else {
+                DrawModelEx(model, transform->position, transform->rotationAxis,
+                            transform->rotationAngle, transform->scale, WHITE);
+            }
         }
     }
 };

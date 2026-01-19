@@ -16,27 +16,21 @@
  */
 
 
-#ifndef TRANSFORM_H
-#define TRANSFORM_H
+#ifndef TRANSFORM_2D_H
+#define TRANSFORM_2D_H
 
 #include "core/Component.h"
 #include "raylib.h"
 
-class Transform : public Component {
+class Transform2DComponent : public Component {
 public:
-    Vector3 position;
-    Vector3 rotationAxis;
-    float rotationAngle;
-    Vector3 scale;
+    Vector2 position;
+    float rotation;   
+    Vector2 scale;
+    int zIndex;       
 
-    Transform(Vector3 pos = {0,0,0}, Vector3 rotAxis = {0,1,0}, float angle = 0, Vector3 scl = {1,1,1})
-        : position(pos), rotationAxis(rotAxis), rotationAngle(angle), scale(scl) {}
-
-    void Translate(Vector3 delta) {
-        position.x += delta.x;
-        position.y += delta.y;
-        position.z += delta.z;
-    }
+    Transform2DComponent(Vector2 pos = {0, 0}, float rot = 0, Vector2 scl = {1, 1}, int z = 0)
+        : position(pos), rotation(rot), scale(scl), zIndex(z) {}
 };
 
 #endif

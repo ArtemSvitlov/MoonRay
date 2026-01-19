@@ -16,23 +16,27 @@
  */
 
 
-#ifndef MAIN_RENDERER_PIPELINE_H
-#define MAIN_RENDERER_PIPELINE_H
+#ifndef TRANSFORM_H
+#define TRANSFORM_H
 
+#include "core/Component.h"
 #include "raylib.h"
-#include "core/Scene.h"
-class Renderer {
 
-    
+class TransformComponent : public Component {
 public:
-    void Initialize();
+    Vector3 position;
+    Vector3 rotationAxis;
+    float rotationAngle;
+    Vector3 scale;
 
-    void RenderScene(const Scene& scene, Camera3D& camera);
-    
-    void Shutdown();
+    TransformComponent(Vector3 pos = {0,0,0}, Vector3 rotAxis = {0,1,0}, float angle = 0, Vector3 scl = {1,1,1})
+        : position(pos), rotationAxis(rotAxis), rotationAngle(angle), scale(scl) {}
+
+    void Translate(Vector3 delta) {
+        position.x += delta.x;
+        position.y += delta.y;
+        position.z += delta.z;
+    }
 };
 
-
-
-
-#endif 
+#endif

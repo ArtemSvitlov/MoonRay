@@ -16,10 +16,8 @@
  */
 
 
-
 #include "raylib.h"
 #include <memory>
-#include "core/Renderer.h"
 #include "core/Scene.h"
 #include "core/GameObject.h"
 
@@ -32,40 +30,42 @@ const int TARGET_FPS = 60;
 
 const Camera3D CAMERA_SETUP = { { 10.0f, 10.0f, 10.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f, CAMERA_PERSPECTIVE };
 
+const Camera2D CAMERA_2D_SETUP = { { WIDTH / 2.0f, HEIGHT / 2.0f }, { 0.0f, 0.0f }, 0.0f, 1.0f };
+
 int main() {
 
     InitWindow(WIDTH, HEIGHT, TITLE);
     SetTargetFPS(TARGET_FPS);
 
-    Renderer renderer;
-    renderer.Initialize();
-
     Scene scene;
 
-
-
     Camera camera = CAMERA_SETUP;
+    Camera2D camera2d = CAMERA_2D_SETUP;
 
     while (!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
 
-    
         UpdateCamera(&camera, CAMERA_ORBITAL);
         scene.Update(deltaTime);
 
+
         BeginDrawing();
-            ClearBackground(RAYWHITE);
+            ClearBackground(BLACK);
             
+ 
             BeginMode3D(camera);
-                renderer.RenderScene(scene, camera);
+                scene.Render();
             EndMode3D();
 
-            DrawFPS(10, 10); 
+
+            BeginMode2D(camera2d);
+                scene.Render2D();
+            EndMode2D();
+
         EndDrawing();
     }
 
 
-    renderer.Shutdown();
     CloseWindow();
 
     return 0;
