@@ -19,17 +19,17 @@
 #include "core/Component.h"
 #include "core/GameObject.h"
 
-class TestComponent : public Component {
+class EmptyComponent : public Component {
 public:
     float radius;
-    TestComponent(float r) : radius(r) {}
+    EmptyComponent(float r) : radius(r) {}
 
     void Update(float deltaTime) override {
-        // TODO It test component 
+    
     }
 
     void Draw() override {
    
-        // TODO: Draw something for testing
+ 
     }
 };
