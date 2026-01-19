@@ -48,8 +48,20 @@ public:
 
     float GetRotationAngle() const { return rotationAngle; }
 
+    void SetPosition(Vector3 newPos) { position = newPos; }
 
+
+    void Translate(Vector3 delta) {
+        position.x += delta.x;
+        position.y += delta.y;
+        position.z += delta.z;
+    }
     void SetRotationAxis(Vector3 axis) { rotationAxis = axis; }
+
+    Vector3 GetRotationAxis() const { return rotationAxis; }
+
+    void SetScale(Vector3 scl) { scale = scl; }
+    Vector3 GetScale() const { return scale; }
 
     template <typename T, typename... TArgs>
     T& AddComponent(TArgs&&... args) {
