@@ -25,15 +25,17 @@ Built-in Plotting: Simplified methods for visualizing data over time (performanc
 
 Example: Debug Monitor
 
-```C++
+```cpp
+std::vector<float> frameTimes;
+
 auto& debug = manager->AddComponent<GuiComponent>("System Monitor", KEY_F3);
-static std::vector<float> frameTimes;
 
 debug.onGuiRender = [&]() {
     ImGui::Text("Delta Time: %.4f", GetFrameTime());
     debug.PlotDynamic("Performance", frameTimes, GetFrameTime());
 };
-GuiComponent Methods:```
+```
+GuiComponent Methods:
 
 PlotLine / PlotBar: Render static arrays of data.
 
