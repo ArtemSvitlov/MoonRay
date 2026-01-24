@@ -49,7 +49,7 @@ To create a new behavior, inherit from the Component class and override Update(f
 
 Example: WASD Movement Component This component checks raylib's input states inside the update loop and applies translations via the Transform component:
 
-C++
+```cpp
 #include "components/Transform.h"
 
 class WASDMoveComponent : public Component {
@@ -70,6 +70,7 @@ public:
         transform->Translate(direction);
     }
 };
+```
 
 ## Lifecycle & Rendering
 
