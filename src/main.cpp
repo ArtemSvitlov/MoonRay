@@ -20,6 +20,8 @@
 #include <memory>
 #include "core/Scene.h"
 #include "core/GameObject.h"
+#include "Imgui/rlImGui.h"
+#include "components/GuiComponent.h"
 
 
 const char* TITLE = "ENGINE BASE";
@@ -36,6 +38,7 @@ int main() {
 
     InitWindow(WIDTH, HEIGHT, TITLE);
     SetTargetFPS(TARGET_FPS);
+    rlImGuiSetup(true);
 
     Scene scene;
 
@@ -51,8 +54,7 @@ int main() {
 
         BeginDrawing();
             ClearBackground(BLACK);
-            
- 
+
             BeginMode3D(camera);
                 scene.Render();
             EndMode3D();
@@ -62,10 +64,13 @@ int main() {
                 scene.Render2D();
             EndMode2D();
 
+            rlImGuiBegin(); 
+                // here u can draw imgui stuff
+            rlImGuiEnd();   
         EndDrawing();
     }
 
-
+    rlImGuiShutdown();
     CloseWindow();
 
     return 0;
