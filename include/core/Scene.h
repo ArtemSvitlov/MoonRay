@@ -41,12 +41,10 @@ public:
         for (auto& obj : gameObjects) obj->Update(deltaTime);
     }
 
-    // 3D Рендер (порядок не важен из-за Z-буфера видеокарты)
     void Render() const {
         for (const auto& obj : gameObjects) obj->Render();
     }
 
-    // 2D Рендер (с сортировкой по слоям)
     void Render2D() {
         std::vector<GameObject*> sorted2D;
 
@@ -55,8 +53,6 @@ public:
                 sorted2D.push_back(obj.get());
             }
         }
-
-        // Сортировка: объекты с меньшим zIndex рисуются первыми (уходят на задний план)
 
         std::sort(sorted2D.begin(), sorted2D.end(), [](GameObject* a, GameObject* b) {
             return a->GetComponent<Transform2DComponent>()->zIndex <

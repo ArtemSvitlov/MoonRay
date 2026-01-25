@@ -68,8 +68,6 @@ public:
     }
 
     ~MaterialComponent() {
-        // Note: Material unloading should be handled carefully to avoid double frees
-        // depending on how materials are shared among game objects.
     }
 };
 

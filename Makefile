@@ -1,32 +1,44 @@
-# --- Переменные ---
+# --- Настройки ---
 PROJECT_NAME = MoonRay
 CC = x86_64-w64-mingw32-g++
-CFLAGS = -I./include -Wall -DNO_FONT_AWESOME
+EXE = MoonRay.exe
+
+# Добавляем путь к Lua (согласно твоей структуре)
+# Добавил -I./include/components на всякий случай
+CFLAGS = -I./include -I./include/lua -I./include/components -Wall -DNO_FONT_AWESOME -O2
 LDFLAGS = -L./libs
 
-# Библиотеки
-LIBS = -lraylib -lopengl32 -lgdi32 -lwinmm -luser32 -lshell32
+# Библиотеки (добавляем lua53)
+LIBS = -lraylib -llua53 -lopengl32 -lgdi32 -lwinmm -luser32 -lshell32
 
-# Ищем исходники в корне src, src/core, include/Imgui, src/imgui_impl
-SRC = $(wildcard src/*.cpp) $(wildcard src/core/*.cpp) $(wildcard include/Imgui/*.cpp) $(wildcard src/imgui_impl/*.cpp)
+# Поиск исходников
+SRC = $(wildcard src/*.cpp) \
+      $(wildcard src/core/*.cpp) \
+      $(wildcard include/Imgui/*.cpp) \
+      $(wildcard src/imgui_impl/*.cpp)
 
-# Имя выходного файла
-EXE = MoonRay.exe
+# Превращаем список .cpp в список .o
+OBJ = $(SRC:.cpp=.o)
 
 # --- Цели ---
 
 all: $(EXE)
 
-$(EXE): $(SRC)
-	$(CC) $(SRC) $(CFLAGS) $(LDFLAGS) $(LIBS) -o $(EXE)
+# Линковка: зависит от всех .o файлов
+$(EXE): $(OBJ)
+	$(CC) $(OBJ) $(LDFLAGS) $(LIBS) -o $(EXE)
+	@echo [LINK] Success!
+
+# Компиляция каждого файла: теперь изменения в любом файле будут подхвачены
+# Чтобы Makefile видел изменения в .h, можно добавить зависимость от заголовков
+%.o: %.cpp
+	$(CC) -c $< $(CFLAGS) -o $@
+	@echo [CC] $<
 
 run: $(EXE)
 	./$(EXE)
 
-
-
-# 4. Очистка
 .PHONY: clean
 clean:
-	@rm -f $(EXE)
-	@echo [CLEAN] Executable removed.
+	@rm -f $(EXE) $(OBJ)
+	@echo [CLEAN] Executable and objects removed.

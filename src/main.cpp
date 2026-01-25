@@ -24,7 +24,7 @@
 #include "components/GuiComponent.h"
 
 
-const char* TITLE = "ENGINE BASE";
+const char* TITLE = "MoonRay Build 1.0.4";
 const int WIDTH = 800;
 const int HEIGHT = 450;
 const int TARGET_FPS = 60;
